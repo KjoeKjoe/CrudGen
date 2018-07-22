@@ -53,10 +53,10 @@ class CrudGenerator extends Command
             $this->getStub('Controller')
         );
 
-        if(!file_exists($path = base_path("app/http/Modules/{$name}/Controllers")))
+        if(!file_exists($path = base_path("app/Modules/{$name}/Controllers")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/http/Modules/{$name}/Controllers/{$name}Controller.php"), $controllerTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Controllers/{$name}Controller.php"), $controllerTemplate);
     }
 
     protected function model($name)
@@ -66,10 +66,10 @@ class CrudGenerator extends Command
             [$name],
             $this->getStub('Model')
         );
-        if(!file_exists($path = base_path("app/http/Modules/{$name}")))
+        if(!file_exists($path = base_path("app/Modules/{$name}")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/http/Modules/{$name}/{$name}.php"), $modelTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/{$name}.php"), $modelTemplate);
     }
 
     protected function migration($name)
@@ -94,10 +94,10 @@ class CrudGenerator extends Command
             ],
             $this->getStub('Routes')
         );
-        if(!file_exists($path = base_path("app/http/Modules/{$name}/Routes")))
+        if(!file_exists($path = base_path("app/Modules/{$name}/Routes")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/http/Modules/{$name}/Routes/web.php"), $routesTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Routes/web.php"), $routesTemplate);
     }
 
     protected function request($name)
@@ -108,10 +108,10 @@ class CrudGenerator extends Command
             $this->getStub('Request')
         );
 
-        if(!file_exists($path = base_path("app/http/Modules/{$name}/Requests")))
+        if(!file_exists($path = base_path("app/Modules/{$name}/Requests")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/http/Modules/{$name}/Requests/{$name}Request.php"), $requestTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Requests/{$name}Request.php"), $requestTemplate);
     }
 
     protected function views($name)
@@ -169,22 +169,22 @@ class CrudGenerator extends Command
             $this->getView('create')
         );
 
-        if(!file_exists($path = base_path("app/http/Modules/{$name}/Views")))
+        if(!file_exists($path = base_path("app/Modules/{$name}/Views")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/http/Modules/{$name}/Views/index.blade.php"), $viewIndexTemplate);
-        file_put_contents(base_path("app/http/Modules/{$name}/Views/show.blade.php"), $viewShowTemplate);
-        file_put_contents(base_path("app/http/Modules/{$name}/Views/edit.blade.php"), $viewEditTemplate);
-        file_put_contents(base_path("app/http/Modules/{$name}/Views/create.blade.php"), $viewCreateTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Views/index.blade.php"), $viewIndexTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Views/show.blade.php"), $viewShowTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Views/edit.blade.php"), $viewEditTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Views/create.blade.php"), $viewCreateTemplate);
     }
 
     protected function getStub($type)
     {
-        return file_get_contents(base_path("packages/kjoekjoe/crudGen/src/resources/stubs/$type.stub"));
+        return file_get_contents(__DIR__.'/stubs/'.$type.'.stub');
     }
 
     protected function getView($type)
     {
-        return file_get_contents(base_path("packages/kjoekjoe/crudGen/src/resources/stubs/views/$type.blade.php"));
+        return file_get_contents(__DIR__.'/stubs/'.$type.'.stub');
     }
 }
