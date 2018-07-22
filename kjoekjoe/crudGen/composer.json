@@ -1,0 +1,12 @@
+{
+    "name": "kjoekjoe/crudGen",
+    "description": "Generating modules and CRUD at the same time",
+    "authors": [
+        {
+            "name": "Kjoekjoe",
+            "email": "tttttttman1@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

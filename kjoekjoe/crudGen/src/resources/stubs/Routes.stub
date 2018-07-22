@@ -1,0 +1,7 @@
+<?php
+
+Route::group(['module' => '{{modelNameSingularLowerCase}}', 'middleware' => ['web'], 'namespace' => 'App\Modules\{{modelName}}\Controllers'], function() {
+
+    Route::resource('{{modelNameSingularLowerCase}}', '{{modelName}}Controller');
+
+});
