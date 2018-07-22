@@ -1,12 +1,20 @@
 {
     "name": "kjoekjoe/crud-gen",
     "description": "Generating modules and CRUD at the same time",
+    "keywords": ["laravel", "generate", "modules", "module", "structure", "pattern", "CRUD", "kjoe", "kjoekjoe", "artisan", "generator"],
     "authors": [
         {
             "name": "Kjoekjoe",
             "email": "tttttttman1@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": ">=5.4.0",
+        "laravel/framework": ">=5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kjoekjoe\\CrudGen\\": "src/"
+        }
+    }
 }
