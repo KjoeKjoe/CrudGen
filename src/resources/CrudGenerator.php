@@ -1,6 +1,6 @@
 <?php
 
-namespace kjoekjoe\crudGen\resources;
+namespace kjoekjoe\crudgen\resources;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;

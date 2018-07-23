@@ -1,6 +1,6 @@
 <?php
 
-namespace kjoekjoe\crudGen;
+namespace kjoekjoe\crudgen;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,5 +1,5 @@
 {
-    "name": "kjoekjoe/crud-gen",
+    "name": "kjoekjoe/crudgen",
     "description": "Generating modules and CRUD at the same time. WIP",
     "keywords": ["laravel", "generate", "modules", "module", "structure", "pattern", "CRUD", "kjoe", "kjoekjoe", "artisan", "generator"],
     "authors": [
@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "KjoeKjoe\\CrudGen\\": "src/"
+            "Kjoekjoe\\Crudgen\\": "src/"
         }
     }
 }
