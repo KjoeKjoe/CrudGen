@@ -180,11 +180,11 @@ class CrudGenerator extends Command
 
     protected function getStub($type)
     {
-        return file_get_contents(__DIR__.'/stubs/'.$type.'.stub');
+        return file_get_contents(__DIR__.'\\stubs\\'.$type.'.stub');
     }
 
     protected function getView($type)
     {
-        return file_get_contents(__DIR__.'/stubs/'.$type.'.stub');
+        return file_get_contents(__DIR__.'\\stubs\\views\\'.$type.'.blade.php');
     }
 }
