@@ -66,10 +66,10 @@ class CrudGenerator extends Command
             [$name],
             $this->getStub('Model')
         );
-        if(!file_exists($path = base_path("app/Modules/{$name}")))
+        if(!file_exists($path = base_path("app/Modules/{$name}/Models")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/Modules/{$name}/{$name}.php"), $modelTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Models/{$name}.php"), $modelTemplate);
     }
 
     protected function migration($name)
