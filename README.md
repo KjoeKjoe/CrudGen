@@ -12,7 +12,7 @@ You can simply drop or generate modules with their own controllers, models, view
 
 <a name="installation"></a>
 ## Installation
-( WIP: BUG CAN BE PRESENT )
+( WIP: BUGS CAN BE PRESENT )
 
 The best way to install this package is through your terminal via Composer.
 
