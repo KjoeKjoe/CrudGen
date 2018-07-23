@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Kjoekjoe\\Crudgen\\": "src/"
+            "kjoekjoe\\crudgen\\": "vendor/kjoekjoe/crudgen/src/"
         }
     }
 }

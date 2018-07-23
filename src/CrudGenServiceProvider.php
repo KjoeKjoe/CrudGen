@@ -3,6 +3,7 @@
 namespace kjoekjoe\crudgen;
 
 use Illuminate\Support\ServiceProvider;
+use kjoekjoe\crudgen\resources\CrudGenerator;
 
 class CrudGenServiceProvider extends ServiceProvider
 {
@@ -13,6 +14,11 @@ class CrudGenServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CrudGenerator::class,
+            ]);
+        }
         if (is_dir(app_path().'/Modules/')) {
             $modules = config("modules.enable") ?: array_map('class_basename', $this->files->directories(app_path().'/Modules/'));
             foreach ($modules as $module) {
