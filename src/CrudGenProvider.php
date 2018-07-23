@@ -3,9 +3,8 @@
 namespace kjoekjoe\crudGen;
 
 use Illuminate\Support\ServiceProvider;
-use kjoekjoe\crudGen\resources\CrudGenerator;
 
-class CrudGenProvider extends ServiceProvider
+class CrudGenServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
