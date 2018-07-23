@@ -24,7 +24,7 @@ Once this operation is complete, simply add the service provider to your project
 
 #### Service Provider
 ```
-Kjoekjoe\Crudgen\CrudGenServiceProvider::class,
+kjoekjoe\crudgen\CrudGenServiceProvider::class,
 ```
 #### Composer.json
 ```
@@ -35,7 +35,7 @@ Kjoekjoe\Crudgen\CrudGenServiceProvider::class,
         ],
         "psr-4": {
             "App\\": "app/",
-            "Kjoekjoe\\Crudgen\\": "vendor/kjoekjoe/crudgen/src/"
+            "kjoekjoe\\crudgen\\": "vendor/kjoekjoe/crudgen/src/"
         }
     },
 ```
