@@ -8,7 +8,7 @@ You can simply drop or generate modules with their own controllers, models, view
 
 * [Installation](#installation)
 * [Getting started](#getting-started)
-* [Migration Generate](#migration)
+* [Migration Generate](#migration-generate)
 
 
 <a name="installation"></a>
@@ -67,7 +67,7 @@ laravel-project/
                 
 ```
 
-<a name="migration"></a>
+<a name="migration-generate"></a>
 ## Migration Generate
 
 if you want to generate the migration strings/integers or you want to have a uuid field you can use the options:
