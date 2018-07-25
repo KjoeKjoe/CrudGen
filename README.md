@@ -19,7 +19,7 @@ The best way to install this package is through your terminal via Composer.
 
 Run the following command from your projects root
 ```
-composer require kjoekjoe/crudgen dev-master
+composer require kjoekjoe/crudgen
 ```
 Once this operation is complete, simply add the service provider to your project's `config/app.php` and you're done.
 
