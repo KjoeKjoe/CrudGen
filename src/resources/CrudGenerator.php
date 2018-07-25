@@ -50,7 +50,6 @@ class CrudGenerator extends Command
         $this->routes($name);
         $this->views($name);
 
-
         $this->info('Generating Completed');
 
     }
@@ -199,6 +198,8 @@ class CrudGenerator extends Command
                 '{{createRoute}}',
                 '{{showRouteStart}}',
                 '{{deleteRouteStart}}',
+                '{{editRouteStart}}',
+                '{{updateRouteStart}}',
             ],
             [
                 $name,
@@ -209,6 +210,8 @@ class CrudGenerator extends Command
                 strtolower("{{route('{$name}.create')}}"),
                 strtolower("{{route('{$name}.show'"),
                 strtolower("{{route('{$name}.destroy'"),
+                strtolower("{{route('{$name}.edit'"),
+                strtolower("{{route('{$name}.update'"),
             ],
             $this->getView('index')
         );
@@ -222,6 +225,8 @@ class CrudGenerator extends Command
                 '{{createRoute}}',
                 '{{showRouteStart}}',
                 '{{deleteRouteStart}}',
+                '{{editRouteStart}}',
+                '{{updateRouteStart}}',
             ],
             [
                 $name,
@@ -232,6 +237,8 @@ class CrudGenerator extends Command
                 strtolower("{{route('{$name}.create')}}"),
                 strtolower("{{route('{$name}.show'"),
                 strtolower("{{route('{$name}.destroy'"),
+                strtolower("{{route('{$name}.edit'"),
+                strtolower("{{route('{$name}.update'"),
             ],
             $this->getView('show')
         );
@@ -245,6 +252,8 @@ class CrudGenerator extends Command
                 '{{createRoute}}',
                 '{{showRouteStart}}',
                 '{{deleteRouteStart}}',
+                '{{editRouteStart}}',
+                '{{updateRouteStart}}',
             ],
             [
                 $name,
@@ -255,6 +264,8 @@ class CrudGenerator extends Command
                 strtolower("{{route('{$name}.create')}}"),
                 strtolower("{{route('{$name}.show'"),
                 strtolower("{{route('{$name}.destroy'"),
+                strtolower("{{route('{$name}.edit'"),
+                strtolower("{{route('{$name}.update'"),
             ],
             $this->getView('edit')
         );
@@ -268,6 +279,8 @@ class CrudGenerator extends Command
                 '{{createRoute}}',
                 '{{showRouteStart}}',
                 '{{deleteRouteStart}}',
+                '{{editRouteStart}}',
+                '{{updateRouteStart}}',
             ],
             [
                 $name,
@@ -278,13 +291,20 @@ class CrudGenerator extends Command
                 strtolower("{{route('{$name}.create')}}"),
                 strtolower("{{route('{$name}.show'"),
                 strtolower("{{route('{$name}.destroy'"),
+                strtolower("{{route('{$name}.edit'"),
+                strtolower("{{route('{$name}.update'"),
             ],
             $this->getView('create')
         );
 
+        $layoutsTemplate = $this->getView('app');
+
+        if(!file_exists($path = base_path("resources/views/layouts")))
+            mkdir($path, 0777, true);
         if(!file_exists($path = base_path("app/Modules/{$name}/Views")))
             mkdir($path, 0777, true);
 
+        file_put_contents(base_path("resources/views/layouts/app.blade.php"), $layoutsTemplate);
         file_put_contents(base_path("app/Modules/{$name}/Views/index.blade.php"), $viewIndexTemplate);
         file_put_contents(base_path("app/Modules/{$name}/Views/show.blade.php"), $viewShowTemplate);
         file_put_contents(base_path("app/Modules/{$name}/Views/edit.blade.php"), $viewEditTemplate);

@@ -43,6 +43,22 @@ class {{modelName}}Controller extends Controller
         return view('{{modelName}}::show', compact('{{modelNameSingularLowerCase}}'));
     }
 
+    public function edit($id)
+    {
+       //get the inputs out of the DB
+        $table=new {{modelName}}();
+        $del_val= array("timestamp");
+        $columns=array_diff($table->getTableColumnAndTypeList(), $del_val);
+        $columns= array_filter($columns, function($k){
+            return $k != 'id';
+        }, ARRAY_FILTER_USE_KEY);
+        ///////////////////////////////
+
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+
+        return view('{{modelName}}::edit', compact('{{modelNameSingularLowerCase}}', 'columns'));
+    }
+
     public function update({{modelName}}Request $request, $id)
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);

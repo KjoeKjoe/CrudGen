@@ -8,6 +8,32 @@
                     <a href="{{indexRoute}}"  class="w-100 btn btn-success">Index</a>
                     <div class="card-header">{{modelName}} Generated Create Page</div>
                     <div class="card-body">
+                        <form action="{{updateRouteStart}},${{modelNameSingularLowerCase}}->id)}}" method="POST">
+                            {{method_field('PUT')}}
+                            {{csrf_field()}}
+                            @forelse($columns as $input => $type)
+                                <div class="form-group form-inline">
+                                    @if($type === 'int')
+                                        <div class="form-group">
+                                            <input type="number" value="{{${{modelNameSingularLowerCase}}->$input}}" name="{{$input}}" placeholder="{{$input}}" class="form-control">
+                                        </div>
+                                    @elseif($type === 'varchar')
+                                        <div class="form-group">
+                                            <input type="text" value="{{${{modelNameSingularLowerCase}}->$input}}" name="{{$input}}" placeholder="{{$input}}" class="form-control">
+                                        </div>
+                                    @endif
+                                </div>
+                            @empty
+
+                            @endforelse
+                            @if($columns)
+                                <div class="form-group form-inline">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            @endif
+                        </form>
                     </div>
                 </div>
             </div>
