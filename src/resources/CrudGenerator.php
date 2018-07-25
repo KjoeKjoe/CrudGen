@@ -19,6 +19,8 @@ class CrudGenerator extends Command
 
     protected $description = 'Create CRUD operations';
 
+    protected $type = 'Module';
+
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +28,7 @@ class CrudGenerator extends Command
 
     public function handle()
     {
+
         $this->info('Generating module');
 
         $name = $this->argument('name');
@@ -166,6 +169,7 @@ class CrudGenerator extends Command
             ],
             $this->getStub('Routes')
         );
+
         if(!file_exists($path = base_path("app/Modules/{$name}/routes")))
             mkdir($path, 0777, true);
 
