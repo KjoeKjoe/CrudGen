@@ -2,6 +2,7 @@
 
 namespace kjoekjoe\crudgen\resources;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -11,6 +12,9 @@ class CrudGenerator extends Command
 {
     protected $signature = 'crud:generate
         {name : Class (singular) for example User}
+        {--i= : Array for integers in your migration Example (price,level,exp)}
+        {--s= : Array for Strings in your migration Example (name,email,surname)}
+        {--u : use UUID in migration}
         ';
 
     protected $description = 'Create CRUD operations';
@@ -22,18 +26,27 @@ class CrudGenerator extends Command
 
     public function handle()
     {
-        $this->info('Generating module and migration');
+        $this->info('Generating module');
 
         $name = $this->argument('name');
+        $integer = $this->option('i');
+        $string = $this->option('s');
+        $uuid = $this->option('u');
+
+        $migrationOptions = collect(['integers' => $integer, 'strings' => $string, 'uuid' => $uuid]);
+        $tables = $this->makeTables($migrationOptions['integers'], $migrationOptions['strings'], $migrationOptions['uuid']);
 
         $this->controller($name);
         $this->model($name);
         $this->request($name);
         $this->routes($name);
         $this->views($name);
-        $this->migration($name);
 
-        $this->info('Generating Module Completed');
+        $this->info('Generating Migration');
+
+        $this->migration($name, $tables);
+
+        $this->info('Generating Completed');
 
     }
 
@@ -66,19 +79,59 @@ class CrudGenerator extends Command
             [$name],
             $this->getStub('Model')
         );
-        if(!file_exists($path = base_path("app/Modules/{$name}/Models")))
+        if(!file_exists($path = base_path("app/Modules/{$name}")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/Modules/{$name}/Models/{$name}.php"), $modelTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/{$name}.php"), $modelTemplate);
     }
 
-    protected function migration($name)
-    {
-        if (substr($name, -1) == 's') {
-            Artisan::call('make:migration', ['name' => 'create' . $name . '_table']);
+    protected function makeTables($integer, $string, $uuid){
+        if($integer){
+            $integers = explode(',',$integer);
+            $makeIntegerTables = array_map(function($val) { return '$table->integer('.'"' . strtolower($val) . '"'.');'; }, $integers);
         }else{
-            Artisan::call('make:migration', ['name' => 'create' . $name . 's_table']);
+            $makeIntegerTables = null;
         }
+        if($string){
+            $strings = explode(',',$string);
+            $makeStringTables = array_map(function($val) { return '$table->string('.'"' . strtolower($val) . '"'.');'; }, $strings);
+        }else{
+            $makeStringTables = null;
+        }
+        if($uuid){
+            $makeUuidTable = '$table->uuid("uuid");';
+        }else{
+            $makeUuidTable = null;
+        }
+
+        return collect(['integers' => $makeIntegerTables, 'strings' => $makeStringTables, 'uuid' => $makeUuidTable]);
+
+    }
+
+    protected function migration($name, $tables)
+    {
+        $implodedInteger = implode(PHP_EOL,$tables['integers']);
+        $implodedString = implode(PHP_EOL,$tables['strings']);
+        $migrationTemplate = str_replace(
+            [
+                '{{name}}',
+                '{{integers}}',
+                '{{strings}}',
+                '{{uuid}}',
+            ],
+            [
+                $name,
+                $implodedInteger,
+                $implodedString,
+                $tables['uuid'],
+            ],
+            $this->getStub('Migration')
+        );
+
+        $now = Carbon::now();
+
+        file_put_contents(base_path("database/migrations/{$now->format("Y_m_d_his")}_create_{$name}_table.php"), $migrationTemplate);
+
     }
 
     protected function routes($name)
