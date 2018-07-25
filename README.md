@@ -67,7 +67,8 @@ laravel-project/
                 
 ```
 
-##migration
+<a name="migration"></a>
+## Migration Generate
 
 if you want to generate the migration strings/integers or you want to have a uuid field you can use the options:
 ```
