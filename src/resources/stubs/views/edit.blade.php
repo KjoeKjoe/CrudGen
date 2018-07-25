@@ -1,14 +1,16 @@
-<!-- app/views/nerds/edit.blade.php -->
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{modelName}} Edit Page</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
-    <h1>{{modelName}} Generated Edit Page</h1>
-</div>
-</body>
-</html>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <a href="{{indexRoute}}"  class="w-100 btn btn-success">Index</a>
+                    <div class="card-header">{{modelName}} Generated Create Page</div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

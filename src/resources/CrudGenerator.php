@@ -33,8 +33,16 @@ class CrudGenerator extends Command
         $string = $this->option('s');
         $uuid = $this->option('u');
 
+        if (substr($name, -1) != 's') {
+            $name = $name . 's';
+        }
+
         $migrationOptions = collect(['integers' => $integer, 'strings' => $string, 'uuid' => $uuid]);
         $tables = $this->makeTables($migrationOptions['integers'], $migrationOptions['strings'], $migrationOptions['uuid']);
+
+        $this->info('Generating Migration');
+
+        $this->migration($name, $tables);
 
         $this->controller($name);
         $this->model($name);
@@ -42,9 +50,6 @@ class CrudGenerator extends Command
         $this->routes($name);
         $this->views($name);
 
-        $this->info('Generating Migration');
-
-        $this->migration($name, $tables);
 
         $this->info('Generating Completed');
 
@@ -75,14 +80,20 @@ class CrudGenerator extends Command
     protected function model($name)
     {
         $modelTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
+            [
+                '{{modelName}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower($name)
+            ],
             $this->getStub('Model')
         );
-        if(!file_exists($path = base_path("app/Modules/{$name}")))
+        if(!file_exists($path = base_path("app/Modules/{$name}/Models")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/Modules/{$name}/{$name}.php"), $modelTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/Models/{$name}.php"), $modelTemplate);
     }
 
     protected function makeTables($integer, $string, $uuid){
@@ -110,8 +121,17 @@ class CrudGenerator extends Command
 
     protected function migration($name, $tables)
     {
-        $implodedInteger = implode(PHP_EOL,$tables['integers']);
-        $implodedString = implode(PHP_EOL,$tables['strings']);
+
+        if($tables['integers']){
+            $implodedInteger = implode(PHP_EOL,$tables['integers']);
+        }else{
+            $implodedInteger = null;
+        }
+        if($tables['strings']){
+            $implodedString = implode(PHP_EOL,$tables['strings']);
+        }else{
+            $implodedString = null;
+        }
         $migrationTemplate = str_replace(
             [
                 '{{name}}',
@@ -147,10 +167,10 @@ class CrudGenerator extends Command
             ],
             $this->getStub('Routes')
         );
-        if(!file_exists($path = base_path("app/Modules/{$name}/Routes")))
+        if(!file_exists($path = base_path("app/Modules/{$name}/routes")))
             mkdir($path, 0777, true);
 
-        file_put_contents(base_path("app/Modules/{$name}/Routes/web.php"), $routesTemplate);
+        file_put_contents(base_path("app/Modules/{$name}/routes/web.php"), $routesTemplate);
     }
 
     protected function request($name)
@@ -173,12 +193,22 @@ class CrudGenerator extends Command
             [
                 '{{modelName}}',
                 '{{modelNamePluralLowerCase}}',
-                '{{modelNameSingularLowerCase}}'
+                '{{modelNameSingularLowerCase}}',
+                '{{indexRoute}}',
+                '{{storeRoute}}',
+                '{{createRoute}}',
+                '{{showRouteStart}}',
+                '{{deleteRouteStart}}',
             ],
             [
                 $name,
                 strtolower(str_plural($name)),
-                strtolower($name)
+                strtolower($name),
+                strtolower("{{route('{$name}.index')}}"),
+                strtolower("{{route('{$name}.store')}}"),
+                strtolower("{{route('{$name}.create')}}"),
+                strtolower("{{route('{$name}.show'"),
+                strtolower("{{route('{$name}.destroy'"),
             ],
             $this->getView('index')
         );
@@ -186,12 +216,22 @@ class CrudGenerator extends Command
             [
                 '{{modelName}}',
                 '{{modelNamePluralLowerCase}}',
-                '{{modelNameSingularLowerCase}}'
+                '{{modelNameSingularLowerCase}}',
+                '{{indexRoute}}',
+                '{{storeRoute}}',
+                '{{createRoute}}',
+                '{{showRouteStart}}',
+                '{{deleteRouteStart}}',
             ],
             [
                 $name,
                 strtolower(str_plural($name)),
-                strtolower($name)
+                strtolower($name),
+                strtolower("{{route('{$name}.index')}}"),
+                strtolower("{{route('{$name}.store')}}"),
+                strtolower("{{route('{$name}.create')}}"),
+                strtolower("{{route('{$name}.show'"),
+                strtolower("{{route('{$name}.destroy'"),
             ],
             $this->getView('show')
         );
@@ -199,12 +239,22 @@ class CrudGenerator extends Command
             [
                 '{{modelName}}',
                 '{{modelNamePluralLowerCase}}',
-                '{{modelNameSingularLowerCase}}'
+                '{{modelNameSingularLowerCase}}',
+                '{{indexRoute}}',
+                '{{storeRoute}}',
+                '{{createRoute}}',
+                '{{showRouteStart}}',
+                '{{deleteRouteStart}}',
             ],
             [
                 $name,
                 strtolower(str_plural($name)),
-                strtolower($name)
+                strtolower($name),
+                strtolower("{{route('{$name}.index')}}"),
+                strtolower("{{route('{$name}.store')}}"),
+                strtolower("{{route('{$name}.create')}}"),
+                strtolower("{{route('{$name}.show'"),
+                strtolower("{{route('{$name}.destroy'"),
             ],
             $this->getView('edit')
         );
@@ -212,12 +262,22 @@ class CrudGenerator extends Command
             [
                 '{{modelName}}',
                 '{{modelNamePluralLowerCase}}',
-                '{{modelNameSingularLowerCase}}'
+                '{{modelNameSingularLowerCase}}',
+                '{{indexRoute}}',
+                '{{storeRoute}}',
+                '{{createRoute}}',
+                '{{showRouteStart}}',
+                '{{deleteRouteStart}}',
             ],
             [
                 $name,
                 strtolower(str_plural($name)),
-                strtolower($name)
+                strtolower($name),
+                strtolower("{{route('{$name}.index')}}"),
+                strtolower("{{route('{$name}.store')}}"),
+                strtolower("{{route('{$name}.create')}}"),
+                strtolower("{{route('{$name}.show'"),
+                strtolower("{{route('{$name}.destroy'"),
             ],
             $this->getView('create')
         );

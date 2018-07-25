@@ -5,36 +5,42 @@ namespace App\Modules\{{modelName}}\Controllers;
 use Illuminate\Http\Request;
 use App\http\Controllers\Controller;
 use App\Modules\{{modelName}}\Requests\{{modelName}}Request;
-use App\Modules\{{modelName}}\{{modelName}};
+use App\Modules\{{modelName}}\Models\{{modelName}};
 
 class {{modelName}}Controller extends Controller
 {
     public function index()
     {
-        // ${{modelNamePluralLowerCase}} = {{modelName}}::latest()->get();
-
-        return view('{{modelName}}::index');
+        ${{modelNameSingularLowerCase}} = {{modelName}}::all();
+        return view('{{modelName}}::index', compact('{{modelNameSingularLowerCase}}'));
     }
 
     public function create()
     {
-        // ${{modelNamePluralLowerCase}} = {{modelName}}::latest()->get();
+        //get the inputs out of the DB
+        $table=new {{modelName}}();
+        $del_val= array("timestamp");
+        $columns=array_diff($table->getTableColumnAndTypeList(), $del_val);
+        $columns= array_filter($columns, function($k){
+            return $k != 'id';
+        }, ARRAY_FILTER_USE_KEY);
+        ///////////////////////////////
 
-        return view('{{modelName}}::create');
+        return view('{{modelName}}::create', compact('columns'));
     }
 
-    public function store({{modelName}}Request $request)
+    public function store(Request $request)
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 201);
+        return redirect()->route('{{modelNameSingularLowerCase}}.index');
     }
 
     public function show($id)
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
 
-        return view('{{modelName}}::show');
+        return view('{{modelName}}::show', compact('{{modelNameSingularLowerCase}}'));
     }
 
     public function update({{modelName}}Request $request, $id)
@@ -42,13 +48,13 @@ class {{modelName}}Controller extends Controller
         ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
         ${{modelNameSingularLowerCase}}->update($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 200);
+        return redirect()->route('{{modelNameSingularLowerCase}}.index');
     }
 
     public function destroy($id)
     {
         {{modelName}}::destroy($id);
 
-        return response()->json(null, 204);
+        return redirect()->back();
     }
 }

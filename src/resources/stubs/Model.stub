@@ -1,10 +1,21 @@
 <?php
 
-namespace App\Modules\Models\{{modelName}};
+namespace App\Modules\{{modelName}}\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class {{modelName}} extends Model
 {
     protected $guarded = ['id'];
+
+    static function getTableColumnAndTypeList($tableName = '{{modelNameSingularLowerCase}}', $fullType = false){
+        $fieldAndTypeList = [];
+        foreach (DB::select( "describe $tableName")  as $field){
+            $type = ($fullType || !str_contains($field->Type, '('))? $field->Type: substr($field->Type, 0, strpos($field->Type, '('));
+            $fieldAndTypeList[$field->Field] = $type;
+        }
+        return $fieldAndTypeList;
+    }
+
 }
