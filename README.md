@@ -55,6 +55,8 @@ laravel-project/
         └── FooBar/
             ├── Controllers/
             │   └── FooBarController.php
+            ├── Requests/
+            │   └── FooBarRequest.php
             ├── Models/
             │   └── FooBar.php
             ├── Views/
