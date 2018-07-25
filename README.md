@@ -8,6 +8,7 @@ You can simply drop or generate modules with their own controllers, models, view
 
 * [Installation](#installation)
 * [Getting started](#getting-started)
+* [Migration Generate](#migration)
 
 
 <a name="installation"></a>
@@ -43,7 +44,7 @@ kjoekjoe\crudgen\CrudGenServiceProvider::class,
 <a name="getting-started"></a>
 ## Getting started
 
-The built in Artisan command `php artisan crud:generate name` generates a ready to use module in the `app/Modules` folder and a migration in database folder.
+The built in Artisan command `php artisan crud:generate name {--i=} {--s=} {--u}` generates a ready to use module in the `app/Modules` folder and a migration in database folder.
 
 
 This is how the generated module would look like:
@@ -65,3 +66,26 @@ laravel-project/
                 └── web.php
                 
 ```
+
+##migration
+
+if you want to generate the migration strings/integers or you want to have a uuid field you can use the options:
+```
+{--i=} == $table->integer('')
+{--s=} == $table->string('')
+{--u} == $table->uuid('uuid')     
+```
+for example:
+```
+php artisan crud:generate name --i=level,health,mana --s=name,surname --u   
+```
+will generate this:
+```
+$table->uuid('uuid');
+$table->integer("level");
+$table->integer("health");
+$table->integer("mana");
+$table->string("name");
+$table->string("surname");
+```
+
